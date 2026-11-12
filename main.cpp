@@ -7,7 +7,7 @@ void displayMenu();
 void addParticipant(int, string, int, double, int& count);
 void displayRecord(int, string, int, double, int);
 int searchParticipant(const int id[], int, int);
-void exerciseSummary();
+void exerciseSummary(string, int, double, int);
 
 const int SIZE = 20;
 
@@ -41,7 +41,7 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
         getline(cin, name[i]);
         cout << "Enter exercise duration(minutes): ";
         cin >> minute[i];
-        cout << "Enter estimated energy expenditure rate(kcl/m): ";
+        cout << "Enter estimated energy expenditure rate(kcal/m): ";
         cin >> rate;
         double expendedEnergy = rate * minute[i];
         energy[i] = expendedEnergy;
@@ -64,10 +64,14 @@ void displayRecord(int id[], string name[], int minute[], double energy[], int c
         for (int i = 0; i <count; i++){
             cout <<fixed <<setprecision(2);
             cout << "Participant " <<i+1 <<":" <<endl;
-            cout <<left <<setw(25) <<"Participant ID"<< right <<setw(50) <<id[i] <<endl;
-            cout <<left <<setw(25) <<"Name of Participant"<< right <<setw(50) <<name[i] <<endl;
-            cout <<left <<setw(25) <<"Exercise duration"<< right <<setw(50) <<minute[i] <<endl;
-            cout <<left <<setw(25) <<"Estimated energy expended"<< right <<setw(50) <<energy[i] <<endl;
+            cout <<left <<setw(25) <<"Participant ID"
+                 <<right <<setw(50) <<id[i] <<endl;
+            cout <<left <<setw(25) <<"Name of Participant"
+                 <<right <<setw(50) <<name[i] <<endl;
+            cout <<left <<setw(25) <<"Exercise duration(minutes)"
+                 <<right <<setw(50) <<minute[i] <<endl;
+            cout <<left <<setw(25) <<"Estimated energy expended(kcal)"
+                 <<right <<setw(50) <<energy[i] <<endl;
             cout <<endl;
         }
     }
@@ -82,8 +86,32 @@ int searchParticipant(const int id[], int SIZE, int target){
     return -1;
 }
 
-void exerciseSummary(){
-
+void exerciseSummary(string name[], int minute[], double energy[], int count){
+    if (count == 0){
+        cout <<"Insufficient record\n";
+    }else{
+        int totalDuration = 0, energyIndex = 0;
+        double totalEnergy = 0, maxEnergy = energy[0];
+        for (int i = 0; i <count; i++){
+            totalDuration += minute[i];
+            totalEnergy += energy[i];
+            if (energy[i] > maxEnergy){
+                maxEnergy = energy[i];
+                energyIndex = i;
+            }
+        }
+        cout <<fixed<<setprecision(2);
+        cout <<"\n----------------" <<endl;
+        cout <<"Exercise Summary" <<endl;
+        cout <<"----------------" <<endl;
+        cout <<left <<setw(25) <<"Total Duration(minutes)"
+             <<right <<setw(50) <<totalDuration <<endl;
+        cout <<left <<setw(25) <<"Total Energy Expended(kcal)"
+             <<right <<setw(50) <<totalEnergy <<endl;
+        cout <<left <<setw(25) <<"Highest Energy Expended"
+             <<right <<setw(50) <<name[energyIndex] <<endl;
+        cout <<endl;
+    }
 }
 
 int main(){
@@ -109,7 +137,7 @@ int main(){
                 searchParticipant(id, SIZE, target);
                 break;
             case 4:
-                exerciseSummary();
+                exerciseSummary(name, minute, energyExpended, count);
                 break;
             case 5:
                 cout <<"Thank you for using this program.";
