@@ -5,14 +5,14 @@ using namespace std;
 
 void displayMenu();
 void addParticipant(int, string, int, double, int& count);
-void displayRecord();
+void displayRecord(int, string, int, double, int);
 int searchParticipant(const int id[], int, int);
 void exerciseSummary();
 
 const int SIZE = 20;
 
 void displayMenu(){
-    cout << "---------------------------------------------" <<endl;
+    cout << "\n---------------------------------------------" <<endl;
     cout << "Exercise Energy Expenditure Monitoring System" <<endl;
     cout << "---------------------------------------------" <<endl;
     cout << "1. Add Participant" <<endl;
@@ -37,7 +37,8 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
         }
         id[i] = tempID;
         cout << "Enter name: ";
-        cin >> name[i];
+        cin.ignore();
+        getline(cin, name[i]);
         cout << "Enter exercise duration(minutes): ";
         cin >> minute[i];
         cout << "Enter estimated energy expenditure rate(kcl/m): ";
@@ -45,15 +46,31 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
         double expendedEnergy = rate * minute[i];
         energy[i] = expendedEnergy;
         i++;
-        cout << "Participant " << i <<" Added to the system.";
+        cout << "Participant " << i << " Added to the system.";
+        cout <<endl;
     }
     if(i>=20){
         cout << "Maximum capacity of 20 reached\n";
     }
 }
 
-void displayRecord(){
-
+void displayRecord(int id[], string name[], int minute[], double energy[], int count){
+    if(count == 0){
+        cout <<"No Record to show\n";
+    }else{
+        cout << "\n-----------------------------" <<endl;
+        cout << "Report of energy Expenditure" <<endl;
+        cout << "-----------------------------" <<endl;
+        for (int i = 0; i <count; i++){
+            cout <<fixed <<setprecision(2);
+            cout << "Participant " <<i+1 <<":" <<endl;
+            cout <<left <<setw(25) <<"Participant ID"<< right <<setw(50) <<id[i] <<endl;
+            cout <<left <<setw(25) <<"Name of Participant"<< right <<setw(50) <<name[i] <<endl;
+            cout <<left <<setw(25) <<"Exercise duration"<< right <<setw(50) <<minute[i] <<endl;
+            cout <<left <<setw(25) <<"Estimated energy expended"<< right <<setw(50) <<energy[i] <<endl;
+            cout <<endl;
+        }
+    }
 }
 
 int searchParticipant(const int id[], int SIZE, int target){
@@ -84,7 +101,7 @@ int main(){
                 addParticipant(id, name, minute, energyExpended, count);
                 break;
             case 2:
-                displayRecord();
+                displayRecord(id, name, minute, energyExpended, count);
                 break;
             case 3:
                 cout <<"Please enter the Participant's ID: ";
