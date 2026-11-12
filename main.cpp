@@ -64,13 +64,13 @@ void displayRecord(int id[], string name[], int minute[], double energy[], int c
         for (int i = 0; i <count; i++){
             cout <<fixed <<setprecision(2);
             cout << "Participant " <<i+1 <<":" <<endl;
-            cout <<left <<setw(25) <<"Participant ID"
+            cout <<left <<setw(30) <<"Participant ID"
                  <<right <<setw(50) <<id[i] <<endl;
-            cout <<left <<setw(25) <<"Name of Participant"
+            cout <<left <<setw(30) <<"Name of Participant"
                  <<right <<setw(50) <<name[i] <<endl;
-            cout <<left <<setw(25) <<"Exercise duration(minutes)"
+            cout <<left <<setw(30) <<"Exercise duration(minutes)"
                  <<right <<setw(50) <<minute[i] <<endl;
-            cout <<left <<setw(25) <<"Estimated energy expended(kcal)"
+            cout <<left <<setw(30) <<"Estimated energy expended(kcal)"
                  <<right <<setw(50) <<energy[i] <<endl;
             cout <<endl;
         }
@@ -104,11 +104,11 @@ void exerciseSummary(string name[], int minute[], double energy[], int count){
         cout <<"\n----------------" <<endl;
         cout <<"Exercise Summary" <<endl;
         cout <<"----------------" <<endl;
-        cout <<left <<setw(25) <<"Total Duration(minutes)"
+        cout <<left <<setw(30) <<"Total Duration(minutes)"
              <<right <<setw(50) <<totalDuration <<endl;
-        cout <<left <<setw(25) <<"Total Energy Expended(kcal)"
+        cout <<left <<setw(30) <<"Total Energy Expended(kcal)"
              <<right <<setw(50) <<totalEnergy <<endl;
-        cout <<left <<setw(25) <<"Highest Energy Expended"
+        cout <<left <<setw(30) <<"Highest Energy Expended"
              <<right <<setw(50) <<name[energyIndex] <<endl;
         cout <<endl;
     }
@@ -131,11 +131,32 @@ int main(){
             case 2:
                 displayRecord(id, name, minute, energyExpended, count);
                 break;
-            case 3:
-                cout <<"Please enter the Participant's ID: ";
-                cin >> target;
-                searchParticipant(id, SIZE, target);
+            case 3:{
+                if (count != 0){
+                    cout <<"Please enter the Participant's ID: ";
+                    cin >> target;
+                }else{
+                    cout << "Error: no value available in record.\n";
+                    break;
+                }
+                int index = searchParticipant(id, SIZE, target);
+                if(index != -1){
+                    cout <<"\nParticipant ID found at index ["<<index<<"]\n"<<endl;
+                    cout <<fixed <<setprecision(2);
+                    cout <<left <<setw(30) <<"Participant ID"
+                         <<right <<setw(50) <<id[index] <<endl;
+                    cout <<left <<setw(30) <<"Name of Participant"
+                         <<right <<setw(50) <<name[index] <<endl;
+                    cout <<left <<setw(30) <<"Exercise duration(minutes)"
+                         <<right <<setw(50) <<minute[index] <<endl;
+                    cout <<left <<setw(30) <<"Estimated energy expended(kcal)"
+                         <<right <<setw(50) <<energyExpended[index] <<endl;
+                    cout <<endl;
+                }else{
+                    cout <<"Participant ID not found in system.";
+                }
                 break;
+            }
             case 4:
                 exerciseSummary(name, minute, energyExpended, count);
                 break;
