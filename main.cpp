@@ -4,10 +4,10 @@
 using namespace std;
 
 void displayMenu();
-void addParticipant(int, string, int, double, int& count);
-void displayRecord(int, string, int, double, int);
-int searchParticipant(const int id[], int, int);
-void exerciseSummary(string, int, double, int);
+void addParticipant(int id[], string name[], int minute[], double energy[], int& count);
+void displayRecord(int id[], string name[], int minute[], double energy[], int count);
+int searchParticipant(const int id[], int upper, int target);
+void exerciseSummary(string name[], int minute[], double energy[], int count);
 
 const int SIZE = 20;
 
@@ -109,7 +109,7 @@ void displayRecord(int id[], string name[], int minute[], double energy[], int c
     }
 }
 
-int searchParticipant(const int id[], int SIZE, int target){
+int searchParticipant(const int id[], int upper, int target){
     /*
     * @brief Linear search to find the target id's index value
     *
@@ -119,7 +119,7 @@ int searchParticipant(const int id[], int SIZE, int target){
     * 
     * @return Index of the target
     */
-    for(int i = 0; i < SIZE; i++){
+    for(int i = 0; i < upper; i++){
         if(id[i] == target){
             //iterate through each items in id
             return i;
@@ -200,7 +200,7 @@ int main(){
                     cout << "Error: no value available in record.\n";
                     break;
                 }
-                int index = searchParticipant(id, SIZE, target);
+                int index = searchParticipant(id, count, target);
                 if(index != -1){
                     //print the table if index is found
                     cout <<"\nParticipant ID found at index ["<<index<<"]\n"<<endl;
