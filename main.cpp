@@ -39,8 +39,8 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
     */
     while (i<SIZE){
         //loop while there are less than 20 records
-        double rate;
-        int tempID;
+        double rate, tempRate;
+        int tempID, tempMinute;
         cout << "\n  .--- New Participant " << string(36, '-') <<endl;
         cout << "  | Enter ID number (or -1 to stop)          : ";
         //using tempID before actually append to id[] array 
@@ -68,9 +68,19 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
         cin.ignore();
         getline(cin, name[i]);
         cout << "  | Enter exercise duration (minutes)        : ";
-        cin >> minute[i];
+        cin >> tempMinute;
+        if (tempMinute < 0){
+            cout << "  '--> [!] Error: Duration should always be positive! Please start over.\n";
+            continue;
+        }
+        minute[i] = tempMinute;
         cout << "  | Enter energy expenditure rate (kcal/min) : ";
-        cin >> rate;
+        cin >> tempRate;
+        if (tempRate < 0){
+            cout << "  '--> [!] Error: Energy expenditure rate should always be positive! Please start over.\n";
+            continue;
+        }
+        rate = tempRate;
         //formula for the expended energy
         double expendedEnergy = rate * minute[i];
         energy[i] = expendedEnergy;
