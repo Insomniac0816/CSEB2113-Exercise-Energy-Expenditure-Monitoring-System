@@ -50,6 +50,12 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
             //terminate the process with an anchor value
             break;
         }
+        if(tempID<0){
+            //an ID should always be positive
+            cout << "  '--> [!] Error: ID should always be positive!\n";
+            //skips the rest of the processes if the input is negative value
+            continue;
+        }
         if (searchParticipant(id, i, tempID) != -1){
             //reusing function searchParticipant() to check for duplicate
             cout << "  '--> [!] Error: The ID already exists! Try a different one.\n";
