@@ -62,7 +62,6 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
             //skips the rest of the processes if there are duplicate
             continue;
         }
-        id[i] = tempID;
         cout << "  | Enter name                               : ";
         //cleanup any leftover \n from the previous cin in prep for getline()
         cin.ignore();
@@ -84,6 +83,7 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
         //formula for the expended energy
         double expendedEnergy = rate * minute[i];
         energy[i] = expendedEnergy;
+        id[i] = tempID;
         i++;
         cout << "  '--> [OK] Participant " << i << " added to the system.";
         cout <<endl;
