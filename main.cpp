@@ -41,6 +41,7 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
         //loop while there are less than 20 records
         double rate, tempRate;
         int tempID, tempMinute;
+        string tempName;
         cout << "\n  .--- New Participant " << string(36, '-') <<endl;
         cout << "  | Enter ID number (or -1 to stop)          : ";
         //using tempID before actually append to id[] array 
@@ -65,7 +66,7 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
         cout << "  | Enter name                               : ";
         //cleanup any leftover \n from the previous cin in prep for getline()
         cin.ignore();
-        getline(cin, name[i]);
+        getline(cin, tempName);
         cout << "  | Enter exercise duration (minutes)        : ";
         cin >> tempMinute;
         if (tempMinute < 0){
@@ -81,9 +82,11 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
         rate = tempRate;
         //formula for the expended energy
         double expendedEnergy = rate * minute[i];
+        //assigning everything into the array after passing through all checks
+        id[i] = tempID;
+        name[i] = tempName;
         minute[i] = tempMinute;
         energy[i] = expendedEnergy;
-        id[i] = tempID;
         i++;
         cout << "  '--> [OK] Participant " << i << " added to the system.";
         cout <<endl;
