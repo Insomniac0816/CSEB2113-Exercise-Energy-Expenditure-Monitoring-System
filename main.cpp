@@ -72,16 +72,16 @@ void addParticipant(int id[], string name[], int minute[], double energy[], int&
             cout << "  '--> [!] Error: Duration should always be positive! Please start over.\n";
             continue;
         }
-        minute[i] = tempMinute;
         cout << "  | Enter energy expenditure rate (kcal/min) : ";
         cin >> tempRate;
-        if (tempRate < 0){
+        if (tempRate <= 0){
             cout << "  '--> [!] Error: Energy expenditure rate should always be positive! Please start over.\n";
             continue;
         }
         rate = tempRate;
         //formula for the expended energy
         double expendedEnergy = rate * minute[i];
+        minute[i] = tempMinute;
         energy[i] = expendedEnergy;
         id[i] = tempID;
         i++;
